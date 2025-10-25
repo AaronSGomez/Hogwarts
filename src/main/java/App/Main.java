@@ -18,7 +18,7 @@ public class Main {
         House hufflepuff = new House("Hufflepuff ","Helga Hufflepuff");
         House ravenclaw = new House("Ravenclaw","Rowena Ravenclaw");
 
-        houseDAO.create(gryffindor);
+        //houseDAO.create(gryffindor);
 
         List<House> houses = houseDAO.getAll();
         //forma Olga: houses.forEach(System.out :: println);

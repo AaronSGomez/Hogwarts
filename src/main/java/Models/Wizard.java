@@ -7,6 +7,15 @@ public class Wizard {
     private int edad, houseId, wandId;
 
     //constructores
+
+    public Wizard(int id, String name, int edad, int houseId, int wandId) {
+        this.id = id;
+        this.name = name;
+        this.edad = edad;
+        this.houseId = houseId;
+        this.wandId = wandId;
+    }
+
     public Wizard() {}
 
     public Wizard(String name, int houseId, int edad, int wandId) {

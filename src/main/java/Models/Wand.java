@@ -6,6 +6,13 @@ public class Wand {
     private double length;
 
     //cosntructor
+    public Wand(int id,String wood, String core, double length) {
+        this.id = id;
+        this.wood = wood;
+        this.core = core;
+        this.length = length;
+    }
+
     public Wand(String wood, String core, double length) {
         this.wood = wood;
         this.core = core;
