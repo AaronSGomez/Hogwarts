@@ -17,7 +17,7 @@ public class WizardDAO {
 
     //CRUD  - CREATE | READ | UPDATE | DELETE
     public void create(Wizard wizard)throws SQLException {
-        String sql= "INSERT INTO wizard (name, edad, houseid, wandid) VALUES (?,?,?,?)";
+        String sql= "INSERT INTO wizard (name, age, house_id, wand_id) VALUES (?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, wizard.getName());
         ps.setInt(2, wizard.getEdad());
@@ -39,12 +39,21 @@ public class WizardDAO {
                             (rs.getInt("id")),
                             (rs.getString("name")),
                             (rs.getInt("age")),
-                            (rs.getInt("houseId")),
-                            (rs.getInt("wandId"))
+                            (rs.getInt("house_id")),
+                            (rs.getInt("wand_id"))
                     ));
         }//endwhile
         rs.close();
         return list;
+    }
+
+    public void delete(int id) throws SQLException {
+        String sql = "DELETE FROM wizard WHERE id=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        ps.close();
+
     }
 
 

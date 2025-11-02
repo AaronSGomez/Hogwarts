@@ -18,7 +18,7 @@ public class Wizard {
 
     public Wizard() {}
 
-    public Wizard(String name, int houseId, int edad, int wandId) {
+    public Wizard(String name, int edad, int houseId, int wandId) {
         this.name = name;
         this.houseId = houseId;
         this.edad = edad;
