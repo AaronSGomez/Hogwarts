@@ -20,7 +20,7 @@ public class WizardDAO {
         String sql= "INSERT INTO wizard (name, age, house_id, wand_id) VALUES (?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, wizard.getName());
-        ps.setInt(2, wizard.getEdad());
+        ps.setInt(2, wizard.getAge());
         ps.setInt(3, wizard.getHouseId());
         ps.setInt(4,wizard.getWandId());
         ps.executeUpdate();
@@ -55,6 +55,21 @@ public class WizardDAO {
         ps.close();
 
     }
+
+    public void update(Wizard wizard) throws SQLException {
+        String sql = "update wizard set name=?, age=?, house_id=?, wand_id=? where id=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, wizard.getName());
+        ps.setInt(2, wizard.getAge());
+        ps.setInt(3, wizard.getHouseId());
+        ps.setInt(4, wizard.getWandId());
+        ps.setInt(5, wizard.getId());
+        ps.executeUpdate();
+        ps.close();
+
+    }
+
+
 
 
 

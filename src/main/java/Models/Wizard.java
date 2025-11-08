@@ -4,30 +4,30 @@ public class Wizard {
 
     private int id;
     private String name;
-    private int edad, houseId, wandId;
+    private int age, houseId, wandId;
 
     //constructores
 
-    public Wizard(int id, String name, int edad, int houseId, int wandId) {
+    public Wizard(int id, String name, int age, int houseId, int wandId) {
         this.id = id;
         this.name = name;
-        this.edad = edad;
+        this.age = age;
         this.houseId = houseId;
         this.wandId = wandId;
     }
 
     public Wizard() {}
 
-    public Wizard(String name, int edad, int houseId, int wandId) {
+    public Wizard(String name, int age, int houseId, int wandId) {
         this.name = name;
         this.houseId = houseId;
-        this.edad = edad;
+        this.age = age;
         this.wandId = wandId;
     }
 
-    public Wizard(String name, int edad) {
+    public Wizard(String name, int age) {
         this.name = name;
-        this.edad = edad;
+        this.age = age;
     }
 
     //getters y setters
@@ -47,12 +47,12 @@ public class Wizard {
         this.name = name;
     }
 
-    public int getEdad() {
-        return edad;
+    public int getAge() {
+        return age;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public int getHouseId() {
@@ -76,7 +76,7 @@ public class Wizard {
         return "Wizard[" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", edad=" + edad +
+                ", age=" + age +
                 ", houseId=" + houseId +
                 ", wandId=" + wandId +
                 ']';
