@@ -77,6 +77,14 @@ public class WizardController {
         return  wizards;
     }
 
+    public void addWizardSwing(String name,int age){
+        try{
+            wizardDAO.createSwing(new Wizard(name,age));
+        }catch (SQLException e){
+            System.out.println("Error en la creacion de mago");
+        }
+    }
+
 
 
 

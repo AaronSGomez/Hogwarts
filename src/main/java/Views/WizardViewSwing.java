@@ -19,7 +19,7 @@ public class WizardViewSwing extends JFrame {
         public WizardViewSwing() throws SQLException {
             controller = new WizardController();
             setTitle("🏰 Hogwarts - Gestión de Magos");
-            setSize(600, 600);
+            setSize(800, 600);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
 
@@ -34,11 +34,13 @@ public class WizardViewSwing extends JFrame {
 
             JButton btnAdd = new JButton("Agregar ➕️");
             JButton btnDelete = new JButton("Eliminar ❌");
+            JButton btnEdit = new JButton("Editar 💫");
             JButton btnRefresh = new JButton("Actualizar 🌀");
 
             JPanel inputPanel = new JPanel();
             inputPanel.add(btnAdd);
             inputPanel.add(btnDelete);
+            inputPanel.add(btnEdit);
             inputPanel.add(btnRefresh);
 
             panel.add(inputPanel, BorderLayout.SOUTH);
@@ -53,6 +55,31 @@ public class WizardViewSwing extends JFrame {
             txtAge = new JTextField(5);
             inputPanel.add(txtAge);
 
+            //TODO: TERMINAR EL EDIT.
+
+            btnAdd.addActionListener(e-> {
+                String name = txtName.getText();
+                int age = Integer.parseInt(txtAge.getText());
+                controller.addWizardSwing(name,age);
+                loadData();
+            });
+
+            btnDelete.addActionListener(e->{
+                int id = Integer.parseInt(txtId.getText());
+                controller.deleteWizard(id);
+                loadData();
+            });
+
+            btnRefresh.addActionListener(e->{
+               loadData();
+            });
+
+            btnEdit.addActionListener(e->{
+                int id = Integer.parseInt(txtId.getText());
+                String name = txtName.getText();
+                int age = Integer.parseInt(txtAge.getText());
+
+            });
 
             loadData();
 
@@ -69,6 +96,8 @@ public class WizardViewSwing extends JFrame {
             }
         }
     }
+
+
 
 
 }

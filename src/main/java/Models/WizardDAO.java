@@ -27,6 +27,16 @@ public class WizardDAO {
         ps.close();
     }
 
+    public void createSwing(Wizard wizard)throws SQLException {
+        String sql= "INSERT INTO wizard (name, age) VALUES (?,?)";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, wizard.getName());
+        ps.setInt(2, wizard.getAge());
+        ps.executeUpdate();
+        ps.close();
+    }
+
+
     public List<Wizard> getAll() throws SQLException{
         List<Wizard> list = new ArrayList<>();
 
