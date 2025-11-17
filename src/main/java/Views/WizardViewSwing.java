@@ -1,6 +1,8 @@
 package Views;
 
 import Controllers.WizardController;
+import Models.House;
+import Models.Wand;
 import Models.Wizard;
 
 import javax.swing.*;
@@ -14,12 +16,12 @@ public class WizardViewSwing extends JFrame {
         private WizardController controller;
         private JTable table;
         private DefaultTableModel model;
-        private JTextField txtName, txtAge, txtId;
+        private JTextField txtName, txtAge, txtId,txtHouse,txtFounder,txtWood,txtCore;
 
         public WizardViewSwing() throws SQLException {
             controller = new WizardController();
             setTitle("🏰 Hogwarts - Gestión de Magos");
-            setSize(800, 600);
+            setSize(1000, 600);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
 
@@ -28,7 +30,7 @@ public class WizardViewSwing extends JFrame {
             add(panel);
 
             // Tabla
-            model = new DefaultTableModel(new String[]{"ID", "Nombre", "Edad"}, 0);
+            model = new DefaultTableModel(new String[]{"ID", "Nombre", "Edad","Casa","Fundador","Madera-Varita","Nucleo-Varita"}, 0);
             table = new JTable(model);
             panel.add(new JScrollPane(table));
 
@@ -54,6 +56,18 @@ public class WizardViewSwing extends JFrame {
             inputPanel.add(new JLabel("Edad:"));
             txtAge = new JTextField(5);
             inputPanel.add(txtAge);
+            inputPanel.add(new JLabel("House:"));
+            txtHouse = new JTextField(5);
+            inputPanel.add(txtHouse);
+            inputPanel.add(new JLabel("Fundador:"));
+            txtFounder = new JTextField(5);
+            inputPanel.add(txtFounder);
+            inputPanel.add(new JLabel("Madera-Varita:"));
+            txtWood = new JTextField(5);
+            inputPanel.add(txtWood);
+            inputPanel.add(new JLabel("Nucleo-Varita:"));
+            txtCore = new JTextField(5);
+            inputPanel.add(txtCore);
 
             //TODO: TERMINAR EL EDIT.
 
@@ -87,12 +101,15 @@ public class WizardViewSwing extends JFrame {
 
     private void loadData() {
         model.setRowCount(0);
-        List<Wizard> wizards= controller.ListWizardsJSwing();
+        List <Wizard> wizards= controller.ListWizardsJSwing();
+       /* List <House> houses= controller.ListHouseJSwing();
+        List <Wand> wands= controller.listWandJSwing();*/
+
         if(wizards.isEmpty()){
             System.out.println("❌ No hay magos");
         }else{
             for (Wizard w : wizards) {
-                model.addRow(new Object[]{w.getId(), w.getName(), w.getAge()});
+                model.addRow(new Object[]{w.getId(), w.getName(), w.getAge(),w.getHouseId(),w.getWandId()});
             }
         }
     }
