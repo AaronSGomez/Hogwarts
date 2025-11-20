@@ -10,7 +10,12 @@ public class WandDAO {
     private Connection conn;
 
     public WandDAO() {
-        conn= DBConnection.getConnection();
+        try {
+            conn= DBConnection.getConnection();
+            System.out.println("☑️☑️☑️☑️️☑️️Conectado a tabla Wands");
+        } catch (SQLException e) {
+            System.err.println("❌❌❌❌❌Error de conexion: " + e.getMessage());
+        }
     }
 
 

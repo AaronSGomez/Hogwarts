@@ -11,7 +11,12 @@ public class WizardDAO {
     private Connection conn;
 
     public WizardDAO() {
-        conn= DBConnection.getConnection();
+        try {
+            conn= DBConnection.getConnection();
+            System.out.println("☑️☑️☑️☑️️☑️️Conectado a tabla Wizards");
+        } catch (SQLException e) {
+            System.err.println("❌❌❌❌❌Error de conexion: " + e.getMessage());
+        }
     }
 
 

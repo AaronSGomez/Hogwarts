@@ -11,7 +11,12 @@ public class HouseDAO {
         private Connection conn;
 
     public HouseDAO() {
-        conn= DBConnection.getConnection();
+        try {
+            conn= DBConnection.getConnection();
+            System.out.println("☑️☑️☑️☑️️☑️️Conectado a tabla Houses");
+        } catch (SQLException e) {
+            System.err.println("❌❌❌❌❌Error de conexion: " + e.getMessage());
+        }
     }
 
     //CRUD  - CREATE | READ | UPDATE | DELETE

@@ -1,25 +1,27 @@
 package Database;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DBConnection {
 
-   private static final String URL = "jdbc:mysql://pi5appserver.ddns.net:33306/hp";
-   // private static final String URL = "jdbc:mysql://192.168.1.40:3306/hp";
-    private static final String USER = "pumuki";
-    private static final String PASSWORD = "undefinedroot";
 
-    public static Connection getConnection() {
-        Connection conn = null;
-        try{
-            conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("☑️☑️☑️☑️️☑️️Bienvenido a howarts");
-        } catch (SQLException e) {
-            System.err.println("❌❌❌❌❌Error de conexion: "+e.getMessage());
-        }
-        return conn;
+    private static final String HOST = System.getenv().getOrDefault("DB_HOST", "localhost");
+    private static final String PORT = System.getenv().getOrDefault("DB_PORT", "5432");
+    private static final String DB = System.getenv().getOrDefault("DB_DB", "violeta_db");
+    private static final String USER = System.getenv().getOrDefault("DB_USER", "violeta_user");
+    private static final String PASS = System.getenv().getOrDefault("DB_PASS", "violeta_1234");
+
+    private static final String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DB;
+
+    private DBConnection() {}
+
+    public static Connection getConnection() throws SQLException {
+        Properties p = new Properties();
+        p.setProperty("user", USER);
+        p.setProperty("password", PASS);
+        return DriverManager.getConnection(URL, p);
     }
 }
