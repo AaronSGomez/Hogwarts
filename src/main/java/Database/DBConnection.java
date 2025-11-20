@@ -22,6 +22,18 @@ public class DBConnection {
         Properties p = new Properties();
         p.setProperty("user", USER);
         p.setProperty("password", PASS);
+        p.setProperty("requireSSL", "true");
+        p.setProperty("useSSL", "true");
+
+        // Fuerza carga del driver (por seguridad)
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("No se encontró el driver MySQL", e);
+        }
+
+        System.out.println("🔗 URL: " + URL); // Solo para debug
+
         return DriverManager.getConnection(URL, p);
     }
 }
