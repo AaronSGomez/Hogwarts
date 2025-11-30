@@ -1,22 +1,20 @@
 package Views;
 
 import Controllers.WizardController;
-import Models.House;
-import Models.Wand;
 import Models.Wizard;
+import Models.WizardListDTO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class WizardViewSwing extends JFrame {
         private WizardController controller;
         private JTable table;
         private DefaultTableModel model;
-        private JTextField txtName, txtAge, txtId,txtHouse,txtFounder,txtWood,txtCore;
+        private JTextField txtName, txtAge, txtId,txtHouse,txtWood,txtCore,txtLength;
 
         public WizardViewSwing() throws SQLException {
             controller = new WizardController();
@@ -30,7 +28,7 @@ public class WizardViewSwing extends JFrame {
             add(panel);
 
             // Tabla
-            model = new DefaultTableModel(new String[]{"ID", "Nombre", "Edad","Casa","Fundador","Madera-Varita","Nucleo-Varita"}, 0);
+            model = new DefaultTableModel(new String[]{"ID", "Name", "Age","Magic-House","Wand-Wood","Wand-Core","Wand-Length"}, 0);
             table = new JTable(model);
             panel.add(new JScrollPane(table));
 
@@ -59,15 +57,15 @@ public class WizardViewSwing extends JFrame {
             inputPanel.add(new JLabel("House:"));
             txtHouse = new JTextField(5);
             inputPanel.add(txtHouse);
-            inputPanel.add(new JLabel("Fundador:"));
-            txtFounder = new JTextField(5);
-            inputPanel.add(txtFounder);
             inputPanel.add(new JLabel("Madera-Varita:"));
             txtWood = new JTextField(5);
             inputPanel.add(txtWood);
             inputPanel.add(new JLabel("Nucleo-Varita:"));
             txtCore = new JTextField(5);
             inputPanel.add(txtCore);
+            inputPanel.add(new JLabel("Longitud:"));
+            txtLength = new JTextField(5);
+            inputPanel.add(txtLength);
 
             //TODO: TERMINAR EL EDIT.
 
@@ -101,18 +99,26 @@ public class WizardViewSwing extends JFrame {
 
     private void loadData() {
         model.setRowCount(0);
+        /* PRUEBAS
         List <Wizard> wizards= controller.ListWizardsJSwing();
-       /* List <House> houses= controller.ListHouseJSwing();
+        List <House> houses= controller.ListHouseJSwing();
         List <Wand> wands= controller.listWandJSwing();*/
+
+       /* CON WizzadListDTO creamos un objeto con todos los datos que quiero mostrar de la base de datos
+        llamamos a listWizardDataForTable() del WizzardDAO, para la carga de datos. y en el WizzardDAO creamos una lista
+        de objetos con la consulta a la base de datos con LEFTJOIN */
+
+        List<WizardListDTO> wizards = controller.listWizardDataForTable();
 
         if(wizards.isEmpty()){
             System.out.println("❌ No hay magos");
         }else{
-            for (Wizard w : wizards) {
-                model.addRow(new Object[]{w.getId(), w.getName(), w.getAge(),w.getHouseId(),w.getWandId()});
+            for (WizardListDTO w : wizards) {
+                model.addRow(new Object[]{w.getId(), w.getName(), w.getAge(),w.getHouseName(),w.getWandWood(),w.getWandCore(),w.getWandLength()});
             }
         }
     }
+
 
 
 

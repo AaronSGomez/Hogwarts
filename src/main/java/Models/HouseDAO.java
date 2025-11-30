@@ -43,6 +43,17 @@ public class HouseDAO {
         return list;
     }
 
+    public void update(House house) throws SQLException {
+        String sql = "update house set name=?, founder=? where id=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, house.getName());
+        ps.setString(2, house.getFounder());
+        ps.setInt(3, house.getId());
+        ps.executeUpdate();
+        ps.close();
+
+    }
+
     public void delete(int id) throws SQLException {
         String sql = "DELETE FROM house WHERE id=?";
         PreparedStatement ps = conn.prepareStatement(sql);

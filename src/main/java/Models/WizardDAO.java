@@ -85,6 +85,33 @@ public class WizardDAO {
     }
 
 
+    public List<WizardListDTO> listAllWizardsWithDetails() throws SQLException{
+        List<WizardListDTO> listDatos = new ArrayList<>();
+
+        String sql = "SELECT w.id, w.name, w.age, h.name AS houseName, w2.wood AS wandWood, w2.core AS wandCore," +
+                "w2.`length` AS wandLength \n" +
+                "FROM wizard w \n" +
+                "LEFT JOIN house h ON w.house_id  = h.id \n" +
+                "LEFT JOIN wand w2 ON w2.id = w.wand_id ";
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while (rs.next()){
+            listDatos.add(new WizardListDTO(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getInt("age"),
+                    rs.getString("houseName"),
+                    rs.getString("wandWood"),
+                    rs.getString("wandCore"),
+                    rs.getDouble("wandLength")
+            ));
+        }//endwhile
+        rs.close();
+        return listDatos;
+    }
+
+
 
 
 

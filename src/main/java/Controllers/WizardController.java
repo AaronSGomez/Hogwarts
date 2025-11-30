@@ -2,6 +2,7 @@ package Controllers;
 
 import Models.Wizard;
 import Models.WizardDAO;
+import Models.WizardListDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -85,6 +86,15 @@ public class WizardController {
         }
     }
 
+    public List<WizardListDTO> listWizardDataForTable(){
+        List<WizardListDTO> listDatos = new ArrayList<>();
+        try{
+            return wizardDAO.listAllWizardsWithDetails();
+        }catch (SQLException e){
+            System.out.println("Error al obtener magos "+e.getMessage());
+        }
+        return  listDatos;
+    }
 
 
 

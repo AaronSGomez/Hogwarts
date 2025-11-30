@@ -1,7 +1,6 @@
 package Models;
 
 import Database.DBConnection;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +45,18 @@ public class WandDAO {
         }//endwhile
         rs.close();
         return list;
+    }
+
+    public void update(Wand wand) throws SQLException {
+        String sql = "update wand set wood=?, core=?,length=? where id=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, wand.getWood());
+        ps.setString(2, wand.getCore());
+        ps.setDouble(3, wand.getLength());
+        ps.setInt(4, wand.getId());
+        ps.executeUpdate();
+        ps.close();
+
     }
 
     public void delete(int id) throws SQLException {
