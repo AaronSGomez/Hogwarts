@@ -62,6 +62,26 @@ public class WizardDAO {
         return list;
     }
 
+    public Wizard getById(int id) throws SQLException{
+        Wizard wizard = new Wizard();
+        String sql = "SELECT FROM wizard WHERE id=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        ResultSet rs = ps.executeQuery(sql);
+
+        while (rs.next()){
+                    wizard=new Wizard(
+                            (rs.getInt("id")),
+                            (rs.getString("name")),
+                            (rs.getInt("age")),
+                            (rs.getInt("house_id")),
+                            (rs.getInt("wand_id"))
+                    );
+        }//endwhile
+        return wizard;
+    }
+
     public void delete(int id) throws SQLException {
         String sql = "DELETE FROM wizard WHERE id=?";
         PreparedStatement ps = conn.prepareStatement(sql);

@@ -68,4 +68,11 @@ public class WandDAO {
 
     }
 
+    public int getId(String wood, String core, double length) throws SQLException {
+       int id=0;
+
+        return id;
+    }
+
+
 }

@@ -44,7 +44,21 @@ public class WizardController {
             System.out.println("❌ Error al listar magos "+e.getMessage());
         }
     }
+    public void updateWizard(int id,String name,int age,int house_id){
+        try{
+            Wizard wizard= wizardDAO.getById(id);
+            wizard.setName(name);
+            wizard.setAge(age);
+            wizard.setHouseId(house_id);
 
+            wizardDAO.update(wizard);
+            System.out.println("☑️  Mago actualizado con exito ");
+        }catch (SQLException e){
+            System.out.println("❌ Error al actualizar mago "+e.getMessage());
+        }
+
+    }
+    @Override
     public void updateWizard(int id,String name,int age,int house_id,int wand_id){
         try{
             Wizard wizard=new Wizard(name,age,house_id,wand_id);

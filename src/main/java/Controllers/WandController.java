@@ -75,12 +75,14 @@ public class WandController {
         return  wands;
     }
 
-    public void addWandSwing(String wood,String core,double length){
-        try{
-            wandDAO.create(new Wand(wood,core,length));
+    public int obtenerIDWand(String wood, String core, double length){
+        int id=Integer.MIN_VALUE;
+        try {
+            id = wandDAO.getId(wood,core,length);
         }catch (SQLException e){
-            System.out.println("❌ Error en la creacion de la barita "+e.getMessage());
+            System.out.println("❌ Error al obtener baritas"+e.getMessage());
         }
+        return id;
     }
 
 }

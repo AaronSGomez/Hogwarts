@@ -1,0 +1,238 @@
+CREATE DATABASE IF NOT EXISTS hp;
+USE hp;
+
+-- ** ----------------------------------------------------------------------------------------------------------------------- **
+-- ** 1. TABLA HOUSE (CASAS/INSTITUCIONES) **
+-- ** Se mantiene sin cambios ya que no había duplicados.
+-- ** ----------------------------------------------------------------------------------------------------------------------- **
+DROP TABLE IF EXISTS wizard;
+DROP TABLE IF EXISTS wand;
+DROP TABLE IF EXISTS house;
+
+CREATE TABLE IF NOT EXISTS house (
+                                     id INT AUTO_INCREMENT PRIMARY KEY,
+                                     name VARCHAR(50) NOT NULL,
+    founder VARCHAR(50) NOT NULL
+    );
+
+INSERT INTO house (id, name, founder) VALUES
+                                          (1, 'Gryffindor', 'Godric Gryffindor'),
+                                          (2, 'Hufflepuff', 'Helga Hufflepuff'),
+                                          (3, 'Ravenclaw', 'Rowena Ravenclaw'),
+                                          (4, 'Slytherin', 'Salazar Slytherin'),
+                                          (5, 'Beauxbatons', 'Flamel Family (Implied)'),
+                                          (6, 'Durmstrang', 'Nerida Vulchanova'),
+                                          (7, 'Horned Serpent', 'Isolt Sayre'),
+                                          (8, 'Wampus', 'Chadwick Boot'),
+                                          (9, 'Thunderbird', 'Webster Boot'),
+                                          (10, 'Pukwudgie', 'James Steward'),
+                                          (11, 'None (Squib)', 'N/A'),
+                                          (12, 'Order of the Phoenix', 'Albus Dumbledore'),
+                                          (13, 'Mahoutokoro', 'Desconocido (Japón)'),
+                                          (14, 'Uagadou', 'Desconocido (África)'),
+                                          (15, 'Castelobruxo', 'Benedita Dourado (Brasil)'),
+                                          (16, 'Koldovstoretz', 'Desconocido (Rusia)'),
+                                          (17, 'MACUSA', 'Jossiah Jackson'),
+                                          (18, 'Ministerio', 'Desconocido'),
+                                          (19, 'Creevey', 'Desconocido'),
+                                          (20, 'Scrimgeour', 'Desconocido');
+
+-- ** ----------------------------------------------------------------------------------------------------------------------- **
+-- ** 2. TABLA WAND (VARITAS) - SIN DUPLICADOS **
+-- ** Solo se incluyen las varitas únicas, conservando el ID más bajo de cada grupo.
+-- ** ----------------------------------------------------------------------------------------------------------------------- **
+CREATE TABLE IF NOT EXISTS wand (
+                                    id INT AUTO_INCREMENT PRIMARY KEY,
+                                    wood VARCHAR(50),
+    core VARCHAR(50),
+    length DOUBLE
+    );
+
+INSERT INTO wand (id, wood, core, length) VALUES
+                                              (1, 'Holly', 'Phoenix Feather', 11.0),
+                                              (2, 'Willow', 'Unicorn Hair', 14.0),
+                                              (3, 'Vine', 'Dragon Heartstring', 10.75),
+                                              (4, 'Yew', 'Phoenix Feather', 13.5),
+                                              (5, 'Elder', 'Thestral Tail Hair', 15.0),
+                                              (6, 'Blackthorn', 'Dragon Heartstring', 9.0),
+                                              (7, 'Ebony', 'Unicorn Hair', 10.0),
+                                              (8, 'Mahogany', 'Dragon Heartstring', 10.25),
+                                              (9, 'Hawthorn', 'Unicorn Hair', 10.0),
+                                              (10, 'Cherry', 'Dragon Heartstring', 12.0),
+                                              (11, 'Cypress', 'Unicorn Hair', 10.25),
+                                              (12, 'Reed', 'Dragon Heartstring', 10.0),
+                                              (13, 'Hornbeam', 'Dragon Heartstring', 10.25),
+                                              (14, 'Birch', 'Veela Hair', 9.5),
+                                              (15, 'Walnut', 'Dragon Heartstring', 12.75),
+                                              (16, 'Oak', 'Unicorn Hair', 12.5),
+                                              (17, 'Unicorn', 'Unicorn Hair', 10.0),
+                                              (18, 'Apple', 'Veela Hair', 9.0),
+                                              (19, 'Aspen', 'Dragon Heartstring', 10.25),
+                                              (20, 'Rosewood', 'Phoenix Feather', 10.5),
+                                              (21, 'Ash', 'Unicorn Hair', 13.0),
+                                              (22, 'Non-Specific', 'Non-Specific', 10.0),
+                                              (23, 'Ash', 'Unicorn Hair', 12.0),
+                                              (24, 'Cherry', 'Dragon Heartstring', 9.0),
+                                              (25, 'Laurel', 'Unicorn Hair', 13.0),
+                                              (26, 'Reed', 'Phoenix Feather', 12.5),
+                                              (27, 'Vine', 'Dragon Heartstring', 12.0),
+                                              (28, 'Oak', 'Dragon Heartstring', 10.5),
+                                              (29, 'Hornbeam', 'Dragon Heartstring', 14.0),
+                                              (30, 'Willow', 'Phoenix Feather', 12.75),
+                                              (31, 'Cedar', 'Unicorn Hair', 10.5),
+                                              (32, 'Aspen', 'Dragon Heartstring', 11.0),
+                                              (33, 'Beech', 'Dragon Heartstring', 9.5),
+                                              (34, 'Pear', 'Unicorn Hair', 10.25),
+                                              (35, 'Sycamore', 'Dragon Heartstring', 10.5),
+                                              (36, 'Silver Lime', 'Phoenix Feather', 8.5),
+                                              (37, 'Elm', 'Unicorn Hair', 11.0),
+                                              (38, 'Mahogany', 'Dragon Heartstring', 14.0),
+                                              (39, 'Yew', 'Thestral Tail Hair', 11.5),
+                                              (40, 'Redwood', 'Phoenix Feather', 10.5),
+                                              (41, 'Maple', 'Thunderbird Feather', 10.0),
+                                              (42, 'Ebony', 'Dragon Heartstring', 12.0),
+                                              (43, 'Cypress', 'Unicorn Hair', 11.0),
+                                              (44, 'Holly', 'Dragon Heartstring', 10.0),
+                                              (45, 'Larch', 'Unicorn Hair', 9.5),
+                                              (46, 'Black Walnut', 'Dragon Heartstring', 12.0),
+                                              (47, 'Dogwood', 'Unicorn Hair', 11.5),
+                                              (48, 'Aspen', 'Phoenix Feather', 10.0),
+                                              (49, 'Hazel', 'Unicorn Hair', 13.0),
+                                              (50, 'Poplar', 'Dragon Heartstring', 11.5),
+                                              (51, 'Elm', 'Phoenix Feather', 12.0),
+                                              (52, 'Lignum Vitae', 'Dragon Heartstring', 10.0),
+                                              (53, 'Blackwood', 'Phoenix Feather', 12.0),
+                                              (54, 'Cedar', 'Dragon Heartstring', 11.0),
+                                              (55, 'Ash', 'Unicorn Hair', 10.5),
+                                              (56, 'Redwood', 'Veela Hair', 9.0),
+                                              (57, 'Cypress', 'Phoenix Feather', 13.0),
+                                              (58, 'Silver Lime', 'Dragon Heartstring', 10.0),
+                                              (59, 'Poplar', 'Unicorn Hair', 11.5),
+                                              (60, 'Elm', 'Dragon Heartstring', 12.0),
+                                              (61, 'Hornbeam', 'Phoenix Feather', 13.0),
+                                              (62, 'Willow', 'Dragon Heartstring', 11.5),
+                                              (63, 'Fir', 'Dragon Heartstring', 10.0),
+                                              (64, 'Cherry', 'Unicorn Hair', 12.5),
+                                              (65, 'Beech', 'Phoenix Feather', 10.75),
+                                              (66, 'Holly', 'Dragon Heartstring', 9.5),
+                                              (67, 'Hawthorn', 'Phoenix Feather', 11.0),
+                                              (68, 'Aspen', 'Unicorn Hair', 10.0),
+                                              (69, 'Vine', 'Phoenix Feather', 11.0),
+                                              (70, 'Oak', 'Dragon Heartstring', 11.0),
+                                              (71, 'Maple', 'Unicorn Hair', 10.25),
+                                              (72, 'Willow', 'Dragon Heartstring', 13.0),
+                                              (73, 'Yew', 'Thestral Tail Hair', 14.5),
+                                              (74, 'Rosewood', 'Phoenix Feather', 11.0),
+                                              (75, 'Cherry', 'Dragon Heartstring', 9.75),
+                                              (76, 'Aspen', 'Phoenix Feather', 12.5),
+                                              (77, 'Dogwood', 'Unicorn Hair', 10.5),
+                                              (78, 'Ebony', 'Dragon Heartstring', 10.0),
+                                              (79, 'Birch', 'Unicorn Hair', 11.0),
+                                              (80, 'Cypress', 'Dragon Heartstring', 12.0);
+
+-- ** ----------------------------------------------------------------------------------------------------------------------- **
+-- ** 3. TABLA WIZARD (MAGOS) - CON WAND_ID CORREGIDO Y DUPLICADOS ELIMINADOS **
+-- ** Se eliminaron las dos entradas duplicadas de Tina y Queenie Goldstein.
+-- ** Se ajustó el wand_id a NULL para los magos cuya varita original fue marcada como duplicada.
+-- ** ----------------------------------------------------------------------------------------------------------------------- **
+CREATE TABLE IF NOT EXISTS wizard (
+                                      id INT AUTO_INCREMENT PRIMARY KEY,
+                                      name VARCHAR(50),
+    age INT,
+    house_id INT,
+    wand_id INT,
+    FOREIGN KEY (house_id) REFERENCES house(id),
+    FOREIGN KEY (wand_id) REFERENCES wand(id)
+    );
+
+INSERT INTO wizard (name, age, house_id, wand_id) VALUES
+                                                      ('Harry Potter', 17, 1, 1),
+                                                      ('Ron Weasley', 17, 1, 2),
+                                                      ('Hermione Granger', 17, 1, 3),
+                                                      ('Lord Voldemort', 71, 4, 4),
+                                                      ('Albus Dumbledore', 115, 1, 5),
+                                                      ('Severus Snape', 38, 4, 19),
+                                                      ('Draco Malfoy', 17, 4, 6),
+                                                      ('Minerva McGonagall', 70, 1, 9),
+                                                      ('Rubeus Hagrid', 60, 1, 16),
+                                                      ('Luna Lovegood', 16, 3, 14),
+                                                      ('Cedric Diggory', 17, 2, 13),
+                                                      ('Bellatrix Lestrange', 47, 4, 15),
+                                                      ('Newt Scamander', 90, 2, 18),
+                                                      ('Fleur Delacour', 20, 5, 12),
+                                                      ('Viktor Krum', 18, 6, 22),
+                                                      ('Nymphadora Tonks', 25, 2, 22),
+                                                      ('Ginny Weasley', 16, 1, 20),
+                                                      ('Neville Longbottom', 17, 1, 21),
+                                                      ('Sirius Black', 36, 1, 8),
+                                                      ('Remus Lupin', 38, 1, 11),
+                                                      ('James Potter', 21, 1, 7),
+                                                      ('Lily Potter', 21, 1, 30),
+                                                      ('Alastor Moody', 55, 1, 23),
+                                                      ('Mary Cattermole', 30, 2, 24),
+                                                      ('Horace Slughorn', 80, 4, 26),
+                                                      ('Kingsley Shacklebolt', 45, 1, 27),
+                                                      ('Molly Weasley', 40, 1, 28),
+                                                      ('Arthur Weasley', 42, 1, 29),
+                                                      ('Amos Diggory', 48, 2, 31),
+                                                      ('Cormac McLaggen', 17, 1, 32),
+                                                      ('Cho Chang', 17, 3, 33),
+                                                      ('Ernie Macmillan', 17, 2, 34),
+                                                      ('Zacharias Smith', 17, 2, 35),
+                                                      ('Xenophilius Lovegood', 45, 3, 36),
+                                                      ('Lucius Malfoy', 41, 4, 37),
+                                                      ('Barty Crouch Jr.', 25, 4, 38),
+                                                      ('Gellert Grindelwald', 100, 6, 39),
+                                                      ('Tina Goldstein', 30, 7, 40),
+                                                      ('Queenie Goldstein', 28, 8, 41),
+                                                      ('Seraphina Picquery', 60, 9, 42),
+                                                      ('Frank Longbottom', 30, 1, 43),
+                                                      ('Alice Longbottom', 30, 1, 44),
+                                                      ('Dean Thomas', 17, 1, 45),
+                                                      ('Blaise Zabini', 17, 4, 46),
+                                                      ('Seamus Finnigan', 17, 1, 47),
+                                                      ('Andromeda Tonks', 45, 4, 48),
+                                                      ('Percy Weasley', 20, 1, 49),
+                                                      ('Bill Weasley', 25, 1, 50),
+                                                      ('Charlie Weasley', 23, 1, 51),
+                                                      ('Porpentina Goldstein', 30, 7, 52),
+                                                      ('Dudley Dursley', 17, 11, 22),
+                                                      ('Tom Riddle Sr.', 71, 11, 25),
+                                                      ('Aberforth Dumbledore', 110, 1, 53),
+                                                      ('Charity Burbage', 40, 3, 54),
+                                                      ('Regulus Black', 18, 4, 55),
+                                                      ('Gabrielle Delacour', 10, 5, 56),
+                                                      ('Bathilda Bagshot', 130, 2, 57),
+                                                      ('Phineas Nigellus Black', 150, 4, 58),
+                                                      ('Pius Thicknesse', 50, 4, 60),
+                                                      ('Rodolphus Lestrange', 50, 4, 61),
+                                                      ('Augusta Longbottom', 70, 1, 62),
+                                                      ('Madam Hooch', 50, 2, 63),
+                                                      ('Pomona Sprout', 65, 2, 64),
+                                                      ('Filius Flitwick', 60, 3, 65),
+                                                      ('Quirinus Quirrell', 30, 3, 68),
+                                                      ('Barty Crouch Sr.', 60, 1, 69),
+                                                      ('Rufus Scrimgeour', 60, 1, 70),
+                                                      ('Vincent Crabbe Sr.', 45, 4, 72),
+                                                      ('Gregory Goyle Sr.', 45, 4, 71),
+                                                      ('Leta Lestrange', 25, 4, 73),
+                                                      ('Yusuf Kama', 35, 5, 74),
+                                                      ('Nagini', 100, 4, 75),
+                                                      ('Theseus Scamander', 35, 2, 76),
+                                                      ('Vinda Rosier', 30, 4, 79),
+                                                      ('Credence Barebone', 20, 11, 80),
+                                                      ('Hannah Abbott', 17, 2, NULL), -- Su varita (id 87) era duplicada, ahora es NULL
+                                                      ('Theodore Nott', 17, 4, NULL), -- Su varita (id 88) era duplicada, ahora es NULL
+                                                      ('Susan Bones', 17, 2, NULL),   -- Su varita (id 89) era duplicada, ahora es NULL
+                                                      ('Michael Corner', 17, 3, NULL), -- Su varita (id 90) era duplicada, ahora es NULL
+                                                      ('Pansy Parkinson', 17, 4, NULL), -- Su varita (id 91) era duplicada, ahora es NULL
+                                                      ('Owen Cauldwell', 17, 2, NULL), -- Su varita (id 92) era duplicada, ahora es NULL
+                                                      ('Garrick Ollivander', 100, 3, 22),
+                                                      ('Newton Scamander', 30, 7, 18),
+                                                      ('Jacob Kowalski', 30, 11, 22),
+                                                      ('Nicholas Flamel', 690, 5, 22),
+                                                      ('Doris Purkiss', 30, 12, 22),
+                                                      ('Broderick Bode', 50, 12, 22),
+                                                      ('Cornelius Fudge', 70, 18, 22),
+                                                      ('Mafalda Hopkirk', 40, 18, 22),
+                                                      ('Perenelle Flamel', 680, 5, 22);
