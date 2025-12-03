@@ -78,7 +78,13 @@ public class WizardViewSwing extends JFrame {
 
             //PARA BORRAR SOLO NECESITAMOS EL ID
             btnDelete.addActionListener(e->{
-                int id = Integer.parseInt(txtId.getText());
+                int fila = table.getSelectedRow();
+                if (fila == -1) {
+                    JOptionPane.showMessageDialog(this, "⚠️ Selecciona un mago para eliminar");
+                    return;
+                }
+                // Precargar valores del mago seleccionado
+                int id = Integer.parseInt(model.getValueAt(fila, 0).toString());
                 controllerWI.deleteWizard(id);
                 loadData();
             });
