@@ -9,10 +9,10 @@ public class DBConnection {
 
 
     private static final String HOST = System.getenv().getOrDefault("DB_HOST", "localhost");
-    private static final String PORT = System.getenv().getOrDefault("DB_PORT", "5432");
-    private static final String DB = System.getenv().getOrDefault("DB_DB", "violeta_db");
-    private static final String USER = System.getenv().getOrDefault("DB_USER", "violeta_user");
-    private static final String PASS = System.getenv().getOrDefault("DB_PASS", "violeta_1234");
+    private static final String PORT = System.getenv().getOrDefault("DB_PORT", "3306");
+    private static final String DB = System.getenv().getOrDefault("DB_DB", "aquilabasededatos");
+    private static final String USER = System.getenv().getOrDefault("DB_USER", "aqui_user");
+    private static final String PASS = System.getenv().getOrDefault("DB_PASS", "aqui_pass");
 
     private static final String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DB;
 

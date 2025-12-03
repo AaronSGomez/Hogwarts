@@ -35,7 +35,9 @@ INSERT INTO house (id, name, founder) VALUES
                                           (17, 'MACUSA', 'Jossiah Jackson'),
                                           (18, 'Ministerio', 'Desconocido'),
                                           (19, 'Creevey', 'Desconocido'),
-                                          (20, 'Scrimgeour', 'Desconocido');
+                                          (20, 'Scrimgeour', 'Desconocido'),
+                                          (50, 'NO HOUSE', 'NO FOUNDER');
+
 
 -- ** ----------------------------------------------------------------------------------------------------------------------- **
 -- ** 2. TABLA WAND (VARITAS) - SIN DUPLICADOS **
@@ -158,7 +160,7 @@ INSERT INTO wizard (name, age, house_id, wand_id) VALUES
                                                       ('Luna Lovegood', 16, 3, 14),
                                                       ('Cedric Diggory', 17, 2, 13),
                                                       ('Bellatrix Lestrange', 47, 4, 15),
-                                                      ('Newt Scamander', 90, 2, 18),
+                                                      ('Newt Scamander', 30, 2, 18),
                                                       ('Fleur Delacour', 20, 5, 12),
                                                       ('Viktor Krum', 18, 6, 22),
                                                       ('Nymphadora Tonks', 25, 2, 22),
@@ -221,14 +223,13 @@ INSERT INTO wizard (name, age, house_id, wand_id) VALUES
                                                       ('Theseus Scamander', 35, 2, 76),
                                                       ('Vinda Rosier', 30, 4, 79),
                                                       ('Credence Barebone', 20, 11, 80),
-                                                      ('Hannah Abbott', 17, 2, NULL), -- Su varita (id 87) era duplicada, ahora es NULL
-                                                      ('Theodore Nott', 17, 4, NULL), -- Su varita (id 88) era duplicada, ahora es NULL
-                                                      ('Susan Bones', 17, 2, NULL),   -- Su varita (id 89) era duplicada, ahora es NULL
-                                                      ('Michael Corner', 17, 3, NULL), -- Su varita (id 90) era duplicada, ahora es NULL
-                                                      ('Pansy Parkinson', 17, 4, NULL), -- Su varita (id 91) era duplicada, ahora es NULL
-                                                      ('Owen Cauldwell', 17, 2, NULL), -- Su varita (id 92) era duplicada, ahora es NULL
+                                                      ('Hannah Abbott', 17, 2, NULL),
+                                                      ('Theodore Nott', 17, 4, NULL),
+                                                      ('Susan Bones', 17, 2, NULL),
+                                                      ('Michael Corner', 17, 3, NULL),
+                                                      ('Pansy Parkinson', 17, 4, NULL),
+                                                      ('Owen Cauldwell', 17, 2, NULL),
                                                       ('Garrick Ollivander', 100, 3, 22),
-                                                      ('Newton Scamander', 30, 7, 18),
                                                       ('Jacob Kowalski', 30, 11, 22),
                                                       ('Nicholas Flamel', 690, 5, 22),
                                                       ('Doris Purkiss', 30, 12, 22),
