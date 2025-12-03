@@ -188,7 +188,7 @@ public class WizardViewSwing extends JFrame {
         int resultado = JOptionPane.showConfirmDialog(
                 this,
                 panelDialogo,
-                "🧙 Editar mago",
+                "🧙 Añadir Mago",
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.PLAIN_MESSAGE
         );
