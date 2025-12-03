@@ -16,7 +16,7 @@ public class WizardController {
         wizardDAO= new WizardDAO();
     }
 
-    public void addWizard(String name,int age,int house_id, int wand_id){
+    public void addWizard(String name,Integer age,Integer house_id, Integer wand_id){
         //comprobar permisos
         //comprobar parametros (verificacion en servidor)
         //control de transacciones
@@ -44,25 +44,14 @@ public class WizardController {
             System.out.println("❌ Error al listar magos "+e.getMessage());
         }
     }
-    public void updateWizard(int id,String name,int age,int house_id){
+
+    public void updateWizard(Integer id,String name,Integer age,Integer house_id, Integer wand_id){
         try{
             Wizard wizard= wizardDAO.getById(id);
             wizard.setName(name);
             wizard.setAge(age);
             wizard.setHouseId(house_id);
-
-            wizardDAO.update(wizard);
-            System.out.println("☑️  Mago actualizado con exito ");
-        }catch (SQLException e){
-            System.out.println("❌ Error al actualizar mago "+e.getMessage());
-        }
-
-    }
-    @Override
-    public void updateWizard(int id,String name,int age,int house_id,int wand_id){
-        try{
-            Wizard wizard=new Wizard(name,age,house_id,wand_id);
-            wizard.setId(id);
+            wizard.setWandId(wand_id);
             wizardDAO.update(wizard);
             System.out.println("☑️  Mago actualizado con exito ");
         }catch (SQLException e){
@@ -71,7 +60,8 @@ public class WizardController {
 
     }
 
-    public void deleteWizard(int id){
+
+    public void deleteWizard(Integer id){
         try{
             wizardDAO.delete(id);
             System.out.println("☑️ Mago eliminado con exito");
@@ -92,7 +82,7 @@ public class WizardController {
         return  wizards;
     }
 
-    public void addWizardSwing(String name,int age){
+    public void addWizardSwing(String name,Integer age){
         try{
             wizardDAO.createSwing(new Wizard(name,age));
         }catch (SQLException e){

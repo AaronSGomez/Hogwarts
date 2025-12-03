@@ -27,7 +27,11 @@ public class WizardDAO {
         ps.setString(1, wizard.getName());
         ps.setInt(2, wizard.getAge());
         ps.setInt(3, wizard.getHouseId());
-        ps.setInt(4,wizard.getWandId());
+        if (wizard.getWandId() == null || wizard.getWandId() == 0) {
+            ps.setNull(4, java.sql.Types.INTEGER); // Esto mete un NULL en la base de datos
+        } else {
+            ps.setInt(4, wizard.getWandId());      // Esto mete el ID si existe
+        }
         ps.executeUpdate();
         ps.close();
     }
@@ -62,14 +66,12 @@ public class WizardDAO {
         return list;
     }
 
-    public Wizard getById(int id) throws SQLException{
+    public Wizard getById(Integer id) throws SQLException{
         Wizard wizard = new Wizard();
-        String sql = "SELECT FROM wizard WHERE id=?";
+        String sql = "SELECT * FROM wizard WHERE id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, id);
-        ps.executeUpdate();
-        ResultSet rs = ps.executeQuery(sql);
-
+        ResultSet rs = ps.executeQuery();
         while (rs.next()){
                     wizard=new Wizard(
                             (rs.getInt("id")),
@@ -78,7 +80,7 @@ public class WizardDAO {
                             (rs.getInt("house_id")),
                             (rs.getInt("wand_id"))
                     );
-        }//endwhile
+        }
         return wizard;
     }
 
@@ -97,7 +99,11 @@ public class WizardDAO {
         ps.setString(1, wizard.getName());
         ps.setInt(2, wizard.getAge());
         ps.setInt(3, wizard.getHouseId());
-        ps.setInt(4, wizard.getWandId());
+        if (wizard.getWandId() == null || wizard.getWandId() == 0) {
+            ps.setNull(4, java.sql.Types.INTEGER); // Esto mete un NULL en la base de datos
+        } else {
+            ps.setInt(4, wizard.getWandId());      // Esto mete el ID si existe
+        }
         ps.setInt(5, wizard.getId());
         ps.executeUpdate();
         ps.close();

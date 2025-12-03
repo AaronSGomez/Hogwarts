@@ -2,13 +2,13 @@ package Models;
 
 public class Wizard {
 
-    private int id;
+    private Integer id;
     private String name;
-    private int age, houseId, wandId;
+    private Integer age, houseId, wandId;
 
     //constructores
 
-    public Wizard(int id, String name, int age, int houseId, int wandId) {
+    public Wizard(Integer id, String name, Integer age, Integer houseId, Integer wandId) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -18,24 +18,24 @@ public class Wizard {
 
     public Wizard() {}
 
-    public Wizard(String name, int age, int houseId, int wandId) {
+    public Wizard(String name, Integer age, Integer houseId, Integer wandId) {
         this.name = name;
         this.houseId = houseId;
         this.age = age;
         this.wandId = wandId;
     }
 
-    public Wizard(String name, int age) {
+    public Wizard(String name, Integer age) {
         this.name = name;
         this.age = age;
     }
 
     //getters y setters
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -47,27 +47,27 @@ public class Wizard {
         this.name = name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
-    public int getHouseId() {
+    public Integer getHouseId() {
         return houseId;
     }
 
-    public void setHouseId(int houseId) {
+    public void setHouseId(Integer houseId) {
         this.houseId = houseId;
     }
 
-    public int getWandId() {
+    public Integer getWandId() {
         return wandId;
     }
 
-    public void setWandId(int wandId) {
+    public void setWandId(Integer wandId) {
         this.wandId = wandId;
     }
 

@@ -26,12 +26,16 @@ public class WizardViewSwing extends JFrame {
         private List<Wizard> wizardList;
         private List<House> houseList;
 
-        //indices
-        int indexHouse;
-        int indexWand;
+        //Indices, integer permite null
+        Integer indexHouse;
+        Integer indexWand;
 
 
         public WizardViewSwing() throws SQLException {
+
+            this.indexWand=null;
+            this.indexHouse=null;
+
             controllerWI = new WizardController();
             controllerHO = new HouseController();
             controllerWD = new WandController();
@@ -63,29 +67,26 @@ public class WizardViewSwing extends JFrame {
 
             panel.add(inputPanel, BorderLayout.SOUTH);
 
-            //boton edit dialog con opciones
+            //boton EDIT Y ADD dialog con opciones
             btnEdit.addActionListener(e -> {
                 funcionEditar();
             });
 
-
             btnAdd.addActionListener(e-> {
-                String name = txtName.getText();
-                int age = Integer.parseInt(txtAge.getText());
-                controllerWI.addWizardSwing(name,age);
-                loadData();
+                funcionAdd();
             });
 
+            //PARA BORRAR SOLO NECESITAMOS EL ID
             btnDelete.addActionListener(e->{
                 int id = Integer.parseInt(txtId.getText());
                 controllerWI.deleteWizard(id);
                 loadData();
             });
 
+            //LOAD DATA
             btnRefresh.addActionListener(e->{
                loadData();
             });
-
 
             loadData();
 
@@ -113,7 +114,122 @@ public class WizardViewSwing extends JFrame {
         }
     }
 
-//editar campo tabla
+//AÑADIR
+    public void funcionAdd() {
+        JPanel panelDialogo = new JPanel(new GridLayout(0, 2, 5, 5));
+        txtWood = new JTextField();
+        txtCore = new JTextField();
+        txtLength = new JTextField();
+        txtName = new JTextField();
+        txtAge = new JTextField();
+
+        //Campos mago (name, age) el id se genera en la bd, no lo incluimos
+        panelDialogo.add(new JLabel("Nombre:"));
+        panelDialogo.add(txtName);
+        panelDialogo.add(new JLabel("Edad:"));
+        panelDialogo.add(txtAge);
+
+        // Crear combo con nombres de casas
+        JComboBox<String> comboHouse = new JComboBox<>();
+        // guardamos la lista
+        for (House h : houseList) {
+            comboHouse.addItem(h.getName());
+        }
+        panelDialogo.add(new JLabel("House:"));
+        panelDialogo.add(comboHouse);
+
+        // Panel para mostrar el fundador
+        JLabel lblFounder = new JLabel();
+        panelDialogo.add(new JLabel("Founder:"));
+        panelDialogo.add(lblFounder);
+
+            // el alumno no tiene casa (null) asigno la 50 creada NO HOUSE / NO FOUNDER por defecto
+            House casaDefault = houseList.stream()
+                    .filter(h -> h.getId() == 50)
+                    .findFirst()
+                    .orElse(null);
+            if (casaDefault != null) {
+                // Visualmente seleccionamos "NO HOUSE"
+                comboHouse.setSelectedItem(casaDefault.getName());
+                // Asignamos el ID 50 para guardar
+                indexHouse = casaDefault.getId();
+                lblFounder.setText(casaDefault.getFounder()); // Pondrá "NO FOUNDER"
+            }
+
+        // Listener para actualizar fundador al cambiar de casa (Tiempo real)
+        comboHouse.addActionListener(ev -> {
+            String selectedName = (String) comboHouse.getSelectedItem();
+            //casa seleccionada ahora de la lista
+            House house = houseList.stream()
+                    .filter(h -> h.getName().equals(selectedName))
+                    .findFirst()
+                    .orElse(null);
+
+            if (house != null) {
+                indexHouse = house.getId();
+                lblFounder.setText(house.getFounder());
+            }
+        });
+        // datos de la nueva varita (Se pueden quedar en blanco)
+        panelDialogo.add(new JLabel("Madera-Varita:"));
+        panelDialogo.add(txtWood);
+        panelDialogo.add(new JLabel("Núcleo-Varita:"));
+        panelDialogo.add(txtCore);
+        panelDialogo.add(new JLabel("Longitud:"));
+        panelDialogo.add(txtLength);
+
+        // Mostrar diálogo
+        int resultado = JOptionPane.showConfirmDialog(
+                this,
+                panelDialogo,
+                "🧙 Editar mago",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
+
+        if (resultado == JOptionPane.OK_OPTION) {
+            try {
+                // 1. LEER DATOS BÁSICOS DEL MAGO
+                String name = txtName.getText().trim();
+                int age = Integer.parseInt(txtAge.getText().trim());
+
+                // 2. LEER DATOS DE LA VARITA (Texto crudo primero)
+                String wood = txtWood.getText().trim();
+                String core = txtCore.getText().trim();
+                String lengthText = txtLength.getText().trim();
+                // CASO A: El usuario dejó los campos VACÍOS varita = null
+                if (wood.isEmpty() && core.isEmpty() && lengthText.isEmpty()) {
+                    indexWand = null;
+                } else {
+                    // Validaciones
+                    if (wood.isEmpty() || core.isEmpty()) {
+                        throw new Exception("⚠️ Para tener varita, faltan Madera o Núcleo");
+                    }
+                    if (lengthText.isEmpty()) {
+                        throw new Exception("⚠️ Falta la longitud de la varita");
+                    }
+
+                    // Convertimos el número ahora que sabemos que existe
+
+                    double length = Double.parseDouble(lengthText);
+                    indexWand = controllerWD.addWand(wood, core, length); // Obtenemos nuevo ID
+
+                }
+
+                // 5. FINAL - crear mago nuevo
+                controllerWI.addWizard(name, age, indexHouse, indexWand);
+
+                loadData(); // Recargar tabla
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "❌ Error: La edad o longitud deben ser números.");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "❌ Error al procesar: " + ex.getMessage());
+            }
+        }
+    }
+
+//EDITAR
     public void funcionEditar(){
         int fila = table.getSelectedRow();
         if (fila == -1) {
@@ -140,38 +256,55 @@ public class WizardViewSwing extends JFrame {
         }
 
         // Seleccionar la casa actual del mago
-        String currentHouse = model.getValueAt(fila, 3).toString();
+        Object rowHouse = model.getValueAt(fila, 3);
+        String currentHouse= (rowHouse != null) ? rowHouse.toString() : "NO HOUSE"; //controlamos el null
+
         comboHouse.setSelectedItem(currentHouse);
 
-        panelDialogo.add(new JLabel("Casa:"));
+        panelDialogo.add(new JLabel("House:"));
         panelDialogo.add(comboHouse);
 
         // Panel para mostrar el fundador
         JLabel lblFounder = new JLabel();
-        panelDialogo.add(new JLabel("Fundador:"));
+        panelDialogo.add(new JLabel("Founder:"));
         panelDialogo.add(lblFounder);
 
         // Inicializar fundador con la casa actual
-            //guardar id de la casa
         House selectedHouse = houseList.stream()
                 .filter(h -> h.getName().equals(currentHouse))
                 .findFirst()
                 .orElse(null);
-        indexHouse = selectedHouse.getId();
+
         if (selectedHouse != null) {
+            indexHouse = selectedHouse.getId();
             lblFounder.setText(selectedHouse.getFounder());
+        }else{
+            // el alumno no tiene casa (null) asigno la 50 creada NO HOUSE / NO FOUNDER
+            House casaDefault = houseList.stream()
+                    .filter(h -> h.getId() == 50)
+                    .findFirst()
+                    .orElse(null);
+            if (casaDefault != null) {
+                // Visualmente seleccionamos "NO HOUSE"
+                comboHouse.setSelectedItem(casaDefault.getName());
+                // Asignamos el ID 50 para guardar
+                indexHouse = casaDefault.getId();
+                lblFounder.setText(casaDefault.getFounder()); // Pondrá "NO FOUNDER"
+            }
+
         }
 
         // Listener para actualizar fundador al cambiar de casa
         comboHouse.addActionListener(ev -> {
             String selectedName = (String) comboHouse.getSelectedItem();
+            //casa seleccionada ahora de la lista
             House house = houseList.stream()
                     .filter(h -> h.getName().equals(selectedName))
                     .findFirst()
                     .orElse(null);
 
-            indexHouse=selectedHouse.getId();
             if (house != null) {
+                indexHouse = house.getId();
                 lblFounder.setText(house.getFounder());
             }
         });
@@ -182,7 +315,7 @@ public class WizardViewSwing extends JFrame {
             txtCore = new JTextField(model.getValueAt(fila, 5).toString(), 10);
             txtLength = new JTextField(model.getValueAt(fila, 6).toString(), 5);
         }catch (Exception e){
-            System.out.println("no hay campos");
+            System.out.println("no hay campos  -wand: " + indexWand +"  -house: "+ indexHouse);
             txtWood = new JTextField();
             txtCore = new JTextField();
             txtLength = new JTextField();
@@ -204,36 +337,68 @@ public class WizardViewSwing extends JFrame {
                 JOptionPane.PLAIN_MESSAGE
         );
 
+        //EXPLICACIONES
         if (resultado == JOptionPane.OK_OPTION) {
             try {
+                // 1. LEER DATOS DEL MAGO
                 String name = txtName.getText().trim();
                 int age = Integer.parseInt(txtAge.getText().trim());
 
+                // 2. LEER DATOS DE LA VARITA
                 String wood = txtWood.getText().trim();
                 String core = txtCore.getText().trim();
-                double length = Double.parseDouble(txtLength.getText().trim());
+                String lengthText = txtLength.getText().trim();
 
-                // --- Si la varita no existe, crearla ---
-                        boolean exists = wandList.stream()
-                                .anyMatch(w -> w.getWood().equalsIgnoreCase(wood)
-                                        && w.getCore().equalsIgnoreCase(core)
-                                        && w.getLength() == length);
+                // 3. RECUPERAR ESTADO ORIGINAL (editamos un mago que puede tener casa y varita)
+                // Buscamos si este mago ya tenía varita antes de empezar //esto me lo enseño Copilot
+                Wizard magoOriginal = wizardList.stream()
+                        .filter(m -> m.getId() == id)
+                        .findFirst()
+                        .orElse(null);
 
-                       if (!exists) {
-                            controllerWD.addWand(wood,core,length);
-                        }
+                Integer idVaritaOriginal = null;  //creo variable por si no existe varita dejarlo en null (Integer acepta null, int no)
+                if (magoOriginal != null && magoOriginal.getWandId() != null) {
+                    idVaritaOriginal = magoOriginal.getWandId(); // Guardamos el ID de su varita
+                }
 
-                //indexWand= controllerWD.obtenerIDWand();
-                // --- Actualizar mago --- usando id
-                //si hay casa pero no barita
-                controllerWI.updateWizard(id, name, age,indexHouse);
-                //TODO si hay barita pero no casa
+                // 4. LÓGICA DE VARITA
+                // CASO A: El usuario dejó los campos VACÍOS o Quiere quitar la varita (quitamos, no elimino)
+                if (wood.isEmpty() && core.isEmpty() && lengthText.isEmpty()) {
+                    indexWand = null; // Marcamos que el mago se quedará sin varita (NULL)
+                }
+                else {
+                    // CASO B: queremos poner/actualizar varita
+                    // Validaciones
+                    if (wood.isEmpty() && core.isEmpty()) {
+                        throw new Exception("⚠️ Para tener varita, faltan Madera y Núcleo ⚠️");
+                    }
+                    if (lengthText.isEmpty()) {
+                        throw new Exception("⚠️ Falta la longitud de la varita ⚠️");
+                    }
 
-                //TODO si solo hay mago
+                    // Convertimos el número ahora que sabemos que existe
+                    double length = Double.parseDouble(lengthText);
 
-                loadData();
+                    // Ya tenía varita -> La actualizamos (UPDATE wand)
+                    if (idVaritaOriginal != null) {
+                        controllerWD.updateWand(idVaritaOriginal, wood, core, length);
+                        indexWand = idVaritaOriginal; // Mantenemos el mismo ID
+                    }
+                    // No tenía varita -> Creamos una nueva (INSERT wand)
+                    else {
+                        indexWand = controllerWD.addWand(wood, core, length); // Obtenemos nuevo ID para poder añadir a mago
+                    }
+                }
+
+                // FINAL - Actualizar mago con el indexWand calculado (sea null o un número)
+                controllerWI.updateWizard(id, name, age, indexHouse, indexWand);
+
+                loadData(); // Recargar tabla para mostrar los resultados en tiempo real
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "❌ Error: La edad o longitud deben ser números.");
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "❌ Error al procesar los datos: " + ex.getMessage());
+                JOptionPane.showMessageDialog(this, "❌ Error al procesar: " + ex.getMessage());
             }
         }
     }

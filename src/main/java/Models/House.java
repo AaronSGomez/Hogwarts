@@ -2,13 +2,13 @@ package Models;
 
 public class House {
 
-    private int id;
+    private Integer id;
     private String name;
     private String founder;
 
     //constructores
     public House(){}
-    public House(int id, String name, String founder) {
+    public House(Integer id, String name, String founder) {
         this.id = id;
         this.name = name;
         this.founder = founder;
@@ -19,7 +19,7 @@ public class House {
     }
 
     //getter y setter
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -31,7 +31,7 @@ public class House {
         return founder;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

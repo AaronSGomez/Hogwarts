@@ -13,17 +13,16 @@ public class WandController {
        wandDAO = new WandDAO();
     }
 
-    public void addWand(String wood, String core, double length){
-        //comprobar permisos
-        //comprobar parametros (verificacion en servidor)
-        //control de transacciones
+    public Integer addWand(String wood, String core, double length){
+       Integer indexWand = 0;
         try{
             Wand wand=new Wand(wood,core,length);
-            wandDAO.create(wand);
+            indexWand = wandDAO.create(wand);
             System.out.println("☑️ Barita agregada con exito");
         }catch(SQLException e){
             System.out.println("❌ Error al agregar Barita : " + e.getMessage());
         }
+        return indexWand;
     }
 
     public void listWands(){
@@ -75,8 +74,8 @@ public class WandController {
         return  wands;
     }
 
-    public int obtenerIDWand(String wood, String core, double length){
-        int id=Integer.MIN_VALUE;
+    public Integer obtenerIDWand(String wood, String core, double length){
+        Integer id=null;
         try {
             id = wandDAO.getId(wood,core,length);
         }catch (SQLException e){

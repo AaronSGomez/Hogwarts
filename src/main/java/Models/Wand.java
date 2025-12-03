@@ -1,12 +1,12 @@
 package Models;
 
 public class Wand {
-    private int id;
+    private Integer id;
     private String wood,core;
     private double length;
 
     //cosntructor
-    public Wand(int id,String wood, String core, double length) {
+    public Wand(Integer id,String wood, String core, double length) {
         this.id = id;
         this.wood = wood;
         this.core = core;
@@ -23,11 +23,11 @@ public class Wand {
     }
 
     // getter y setter
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -19,14 +19,20 @@ public class WandDAO {
 
 
     //CRUD  - CREATE | READ | UPDATE | DELETE
-    public void create(Wand wand)throws SQLException {
+    public Integer create(Wand wand)throws SQLException {
+        Integer indexWand=0;
         String sql= "INSERT INTO wand (wood, core, length) VALUES (?,?,?)";
-        PreparedStatement ps = conn.prepareStatement(sql);
+        PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, wand.getWood());
         ps.setString(2, wand.getCore());
         ps.setDouble(3, wand.getLength());
         ps.executeUpdate();
+        ResultSet id = ps.getGeneratedKeys();
+        while(id.next()){
+            indexWand=id.getInt(1);
+        }
         ps.close();
+        return indexWand;
     }
 
     public List<Wand> getAll() throws SQLException{
@@ -68,10 +74,18 @@ public class WandDAO {
 
     }
 
-    public int getId(String wood, String core, double length) throws SQLException {
-       int id=0;
-
-        return id;
+    public Integer getId(String wood, String core, double length) throws SQLException {
+       Integer indexWand= null;
+        String sql= "SELECT id FROM wand WHERE wood=? AND core=? AND length=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, wood);
+        ps.setString(2, core);
+        ps.setDouble(3, length);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            indexWand=rs.getInt("id");
+        }
+        return indexWand;
     }
 
 

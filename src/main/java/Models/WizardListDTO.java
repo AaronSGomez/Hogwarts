@@ -1,16 +1,16 @@
 package Models;
 
 public class WizardListDTO {
-    private int id;
+    private Integer id;
     private String name;
-    private int age;
+    private Integer age;
     private String houseName;
     private String wandWood;
     private String wandCore;
     private Double wandLength;
 
 
-    public WizardListDTO(int id,String name,int age,String houseName,String wandWood,String wandCore,Double wandLength) {
+    public WizardListDTO(Integer id,String name,Integer age,String houseName,String wandWood,String wandCore,Double wandLength) {
         this.id = id;
         this.name=name;
         this.age=age;
@@ -20,7 +20,7 @@ public class WizardListDTO {
         this.wandLength=wandLength;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -32,7 +32,7 @@ public class WizardListDTO {
         return houseName;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
