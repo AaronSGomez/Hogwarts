@@ -2,8 +2,7 @@ CREATE DATABASE IF NOT EXISTS hp;
 USE hp;
 
 -- ** ----------------------------------------------------------------------------------------------------------------------- **
--- ** 1. TABLA HOUSE (CASAS/INSTITUCIONES) **
--- ** Se mantiene sin cambios ya que no había duplicados.
+-- ** 1. TABLA HOUSE (CASAS/FUNDADOR) **
 -- ** ----------------------------------------------------------------------------------------------------------------------- **
 DROP TABLE IF EXISTS wizard;
 DROP TABLE IF EXISTS wand;
@@ -40,8 +39,7 @@ INSERT INTO house (id, name, founder) VALUES
 
 
 -- ** ----------------------------------------------------------------------------------------------------------------------- **
--- ** 2. TABLA WAND (VARITAS) - SIN DUPLICADOS **
--- ** Solo se incluyen las varitas únicas, conservando el ID más bajo de cada grupo.
+-- ** 2. TABLA WAND (VARITAS)
 -- ** ----------------------------------------------------------------------------------------------------------------------- **
 CREATE TABLE IF NOT EXISTS wand (
                                     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -133,9 +131,7 @@ INSERT INTO wand (id, wood, core, length) VALUES
                                               (80, 'Cypress', 'Dragon Heartstring', 12.0);
 
 -- ** ----------------------------------------------------------------------------------------------------------------------- **
--- ** 3. TABLA WIZARD (MAGOS) - CON WAND_ID CORREGIDO Y DUPLICADOS ELIMINADOS **
--- ** Se eliminaron las dos entradas duplicadas de Tina y Queenie Goldstein.
--- ** Se ajustó el wand_id a NULL para los magos cuya varita original fue marcada como duplicada.
+-- ** 3. TABLA WIZARD (MAGOS)
 -- ** ----------------------------------------------------------------------------------------------------------------------- **
 CREATE TABLE IF NOT EXISTS wizard (
                                       id INT AUTO_INCREMENT PRIMARY KEY,
