@@ -110,7 +110,11 @@ public class WizardViewSwing extends JFrame {
             btnDelete.addActionListener(e->{
                 int fila = table.getSelectedRow();
                 if (fila == -1) {
-                    JOptionPane.showMessageDialog(this, "Selecciona un mago para eliminar");
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Selecciona un mago para eliminar",
+                            "Error",
+                            JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 String name = model.getValueAt(fila, 1).toString();
@@ -298,7 +302,11 @@ public class WizardViewSwing extends JFrame {
     public void funcionEditar(){
         int fila = table.getSelectedRow();
         if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "⚠️ Selecciona un mago para editar");
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Selecciona un mago para editar",
+                    "Error",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
         JPanel panelDialogo = new JPanel(new GridLayout(0, 2, 5, 5));
