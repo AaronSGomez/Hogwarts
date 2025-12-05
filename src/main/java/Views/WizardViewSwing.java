@@ -10,6 +10,7 @@ import Models.WizardListDTO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.List;
 import java.sql.SQLException;
@@ -29,6 +30,12 @@ public class WizardViewSwing extends JFrame {
         //Indices, integer permite null
         Integer indexHouse;
         Integer indexWand;
+         // --- PALETA DE COLORES DE HOGWARTS ---
+         private static final Color GRIS_PIEDRA = new Color(0xB9B494);
+         private static final Color ROJO_GRANATE = new Color(0x740001);
+         private static final Color ORO_OSCURO = new Color(0xD3A625);
+         private static final Color DORADO_BRILLANTE = new Color(0xFFCC33);
+         private static final Color AZUL_MEDIANOCHE = new Color(0x222244);
 
 
         public WizardViewSwing() throws SQLException {
@@ -45,13 +52,26 @@ public class WizardViewSwing extends JFrame {
             setLocationRelativeTo(null);
 
             //Panel principal
-            JPanel panel = new JPanel(new BorderLayout(5,5));
-
+            JPanel panel = new JPanel(new BorderLayout(0,0));
+            panel.setBackground(GRIS_PIEDRA); // 🏰 APLICAR GRIS PIEDRA apenas se ve
             add(panel);
 
             // Tabla
-            model = new DefaultTableModel(new String[]{"ID", "Name", "Age","Magic-House","Wand-Wood","Wand-Core","Wand-Length"}, 0);
+            model = new DefaultTableModel(new String[]{"ID", "Name", "Age","Magic-House","Wand-Wood","Wand-Core","Wand-Length"},0);
             table = new JTable(model);
+            table.setRowHeight(27);
+            table.setFont(new Font("Segoe Print", Font.BOLD, 13));
+
+            // --- ESTILOS DE ENCABEZADO DE HOGWARTS ----------------------
+            JTableHeader header = table.getTableHeader();
+            header.setBackground(ROJO_GRANATE);
+            header.setForeground(DORADO_BRILLANTE);
+            header.setFont(header.getFont().deriveFont(Font.BOLD, 14f));
+
+            table.setGridColor(GRIS_PIEDRA);
+            table.setBackground(GRIS_PIEDRA);
+            // -------------------------------------------------------------
+
             panel.add(new JScrollPane(table));
 
             JButton btnAdd = new JButton("Agregar ➕️");
@@ -59,7 +79,17 @@ public class WizardViewSwing extends JFrame {
             JButton btnEdit = new JButton("Editar 💫");
             JButton btnRefresh = new JButton("Actualizar 🌀");
 
+            //-----Estilos botones --------------
+            aplicarEstiloBoton(btnAdd);
+            aplicarEstiloBoton(btnDelete);
+            aplicarEstiloBoton(btnEdit);
+            aplicarEstiloBoton(btnRefresh);
+            //------------------------------------
+
             JPanel inputPanel = new JPanel();
+            inputPanel.setBackground(ROJO_GRANATE);
+            inputPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
             inputPanel.add(btnAdd);
             inputPanel.add(btnDelete);
             inputPanel.add(btnEdit);
@@ -80,13 +110,25 @@ public class WizardViewSwing extends JFrame {
             btnDelete.addActionListener(e->{
                 int fila = table.getSelectedRow();
                 if (fila == -1) {
-                    JOptionPane.showMessageDialog(this, "⚠️ Selecciona un mago para eliminar");
+                    JOptionPane.showMessageDialog(this, "Selecciona un mago para eliminar");
                     return;
                 }
+                String name = model.getValueAt(fila, 1).toString();
                 // Precargar valores del mago seleccionado
                 int id = Integer.parseInt(model.getValueAt(fila, 0).toString());
+                int opcion= JOptionPane.showConfirmDialog(
+                        this,
+                        "Seguro que deseas eliminar a '"+name+"' ? NO SE PUEDE DESHACER",
+                        "Eliminar",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                if(opcion != JOptionPane.YES_OPTION){
+                    return;
+                }
                 controllerWI.deleteWizard(id);
                 loadData();
+
             });
 
             //LOAD DATA
@@ -98,8 +140,16 @@ public class WizardViewSwing extends JFrame {
 
         }
 
+    private void aplicarEstiloBoton(JButton button) {
+        button.setBackground(ORO_OSCURO);
+        button.setForeground(AZUL_MEDIANOCHE);
+        button.setFocusPainted(false);
+    }
+
+
     private void loadData() {
         model.setRowCount(0);
+
         //PRUEBAS
         wizardList= controllerWI.ListWizardsJSwing();
         houseList= controllerHO.ListHouseJSwing();
@@ -209,10 +259,10 @@ public class WizardViewSwing extends JFrame {
                 } else {
                     // Validaciones
                     if (wood.isEmpty() || core.isEmpty()) {
-                        throw new Exception("⚠️ Para tener varita, faltan Madera o Núcleo");
+                        throw new Exception("Para tener varita, faltan Madera o Núcleo");
                     }
                     if (lengthText.isEmpty()) {
-                        throw new Exception("⚠️ Falta la longitud de la varita");
+                        throw new Exception("Falta la longitud de la varita");
                     }
 
                     // Convertimos el número ahora que sabemos que existe
@@ -228,9 +278,18 @@ public class WizardViewSwing extends JFrame {
                 loadData(); // Recargar tabla
 
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "❌ Error: La edad o longitud deben ser números.");
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Error: La edad o longitud deben ser números.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "❌ Error al procesar: " + ex.getMessage());
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Error al procesar: "+ex.getMessage() ,
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -376,10 +435,10 @@ public class WizardViewSwing extends JFrame {
                     // CASO B: queremos poner/actualizar varita
                     // Validaciones
                     if (wood.isEmpty() && core.isEmpty()) {
-                        throw new Exception("⚠️ Para tener varita, faltan Madera y Núcleo ⚠️");
+                        throw new Exception("Para tener varita, faltan Madera y Núcleo");
                     }
                     if (lengthText.isEmpty()) {
-                        throw new Exception("⚠️ Falta la longitud de la varita ⚠️");
+                        throw new Exception("Falta la longitud de la varita");
                     }
 
                     // Convertimos el número ahora que sabemos que existe
@@ -402,14 +461,19 @@ public class WizardViewSwing extends JFrame {
                 loadData(); // Recargar tabla para mostrar los resultados en tiempo real
 
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "❌ Error: La edad o longitud deben ser números.");
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Error: La edad o longitud deben ser números.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "❌ Error al procesar: " + ex.getMessage());
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Error al procesar: " + ex.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }
-
-
-
 
 }
