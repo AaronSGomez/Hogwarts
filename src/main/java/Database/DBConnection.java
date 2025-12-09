@@ -7,12 +7,12 @@ import java.util.Properties;
 
 public class DBConnection {
 
-
+// Oculta tus datos con variables de entorno
     private static final String HOST = System.getenv().getOrDefault("DB_HOST", "localhost");
-    private static final String PORT = System.getenv().getOrDefault("DB_PORT", "3306");
-    private static final String DB = System.getenv().getOrDefault("DB_DB", "aquilabasededatos");
-    private static final String USER = System.getenv().getOrDefault("DB_USER", "aqui_user");
-    private static final String PASS = System.getenv().getOrDefault("DB_PASS", "aqui_pass");
+    private static final String PORT = System.getenv().getOrDefault("DB_PORT", "aqui el puerto 3306");
+    private static final String DB = System.getenv().getOrDefault("DB_DB", "aqui la base de datos");
+    private static final String USER = System.getenv().getOrDefault("DB_USER", "aqui el user");
+    private static final String PASS = System.getenv().getOrDefault("DB_PASS", "aqui el pass");
 
     private static final String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DB;
 
