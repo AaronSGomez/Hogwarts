@@ -4,6 +4,10 @@
 
 ---
 
+<p align="center">
+    <img src="assets/hogwarts.png" width="55%" alt="Ventana de gestión de Magos">
+</p>
+
 ## 1. 🧙‍♂️ Características Principales
 
 * **Gestión de Magos**: Permite **Crear, Leer, Actualizar y Eliminar** registros completos de personajes.
@@ -12,6 +16,11 @@
 * **Persistencia de datos**: Conexión y almacenamiento de toda la información en una base de datos **MySQL/MariaDB** dedicada.
 
 ---
+<p align="center">
+    <img src="assets/hogwarts_add.png" width="45%" alt="Ventana de gestión de Magos"> 
+    &nbsp; &nbsp; &nbsp; &nbsp; 
+    <img src="assets/hogwarts_edit.png" width="45%" alt="Ventana de asignación de Varitas">
+</p>
 
 ## 2. 💻 Tecnologías Utilizadas
 
@@ -43,6 +52,9 @@ El proyecto requiere un servidor de base de datos MySQL/MariaDB en funcionamient
     * **Solo Estructura:** `App/db.sql` (Si deseas empezar sin datos precargados).
 
 ### Paso 3: Variables de Conexión (MUY IMPORTANTE)
+<p align="center">
+    <img src="assets/hogwarts_bd.png" width="55%" alt="Ventana de gestión de Magos">
+</p>
 
 Debes configurar las credenciales de conexión de tu base de datos (usuario, contraseña y URL) en el código fuente.
 
@@ -73,3 +85,7 @@ El proyecto puede ser ejecutado de dos maneras, tras compilarlo con Maven:
     * El mago debe **obligatoriamente** tener Nombre y Edad.
     * La varita debe **obligatoriamente** tener Madera, Núcleo y Longitud si se crea su registro.
 * **Edición:** Al editar un mago, los datos cargan, pero **no es posible modificar el ID** (identificador único).
+
+<p align="center">
+    <img src="assets/hogwarts_remove.png" width="55%" alt="Ventana de gestión de Magos">
+</p>
